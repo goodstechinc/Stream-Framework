@@ -6,10 +6,19 @@ Right now we only support Django, but the intention is to support
 any settings system.
 '''
 
+def update_settings(settings):
+    '''Updates stream_frameworks settings using a settings dictionary.
+    '''
+    try:
+        for k in settings:
+            if k and k[0] != '_':
+                globals()[k] = getattr(settings, k)
+    except exceptions as e:
+        return e
 
 def import_global_module(module, current_locals, current_globals, exceptions=None):
     '''Import the requested module into the global scope
-    Warning! This will import your module into the global scope
+    Warning! This will import your module into the global scope.
 
     **Example**:
         from django.conf import settings
@@ -41,7 +50,7 @@ except ImportError as e:
     settings_system = None
 
 try:
-    from pyramid import threadlocal
+    import pyramid
     settings_system = 'pyramid'
 except ImportError as e:
     setting_system = None
@@ -52,7 +61,5 @@ if settings_system == 'django':
     import_global_module(settings, locals(), globals())
     
 elif settings_system == 'pyramid':
-    registry = threadlocal.get_current_registry()
-    settings = registry.settings
-    print settings
-    import_global_module(settings, locals(), globals())
+    # Call Update settings from withing your Pyramid app's main()
+    pass
