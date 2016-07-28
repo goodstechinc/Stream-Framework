@@ -3,7 +3,7 @@ from stream_framework.default_settings import *
 '''
 Please fork and add hooks to import your custom settings system.
 Right now we only support Django, but the intention is to support
-any settings system
+any settings system.
 '''
 
 
@@ -33,13 +33,25 @@ def import_global_module(module, current_locals, current_globals, exceptions=Non
     finally:
         del current_globals, current_locals
 
-
+# Try importing various webframeworks
 try:
     import django
     settings_system = 'django'
 except ImportError as e:
     settings_system = None
 
+try:
+    import pyramid
+    settings_system = 'pyramid'
+except ImportError as e:
+    setting_system = None
+
+# Update the settings depending on which framework is present
 if settings_system == 'django':
     from django.conf import settings
+    import_global_module(settings, locals(), globals())
+    
+elif settings_system == 'pyramid':
+    registry = pyramid.threadlocal.get_current_registry()
+    settings = registry.settings
     import_global_module(settings, locals(), globals())
