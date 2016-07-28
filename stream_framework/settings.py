@@ -9,7 +9,7 @@ any settings system.
 def update_settings(settings):
     '''Updates stream_frameworks settings using a settings dictionary.
     '''
-    if k in settings:
+    for k in settings:
         globals()[k] = settings[k]
 
 def import_global_module(module, current_locals, current_globals, exceptions=None):
