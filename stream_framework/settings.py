@@ -9,12 +9,9 @@ any settings system.
 def update_settings(settings):
     '''Updates stream_frameworks settings using a settings dictionary.
     '''
-    try:
-        for k in settings:
-            if k and k[0] != '_':
-                globals()[k] = getattr(settings, k)
-    except exceptions as e:
-        return e
+    for k in settings:
+        if k and k[0] != '_':
+            globals()[k] = getattr(settings, k)
 
 def import_global_module(module, current_locals, current_globals, exceptions=None):
     '''Import the requested module into the global scope
