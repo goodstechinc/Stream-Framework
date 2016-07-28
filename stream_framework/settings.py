@@ -52,6 +52,8 @@ if settings_system == 'django':
     import_global_module(settings, locals(), globals())
     
 elif settings_system == 'pyramid':
+    print 'here'
+    assert 0
     registry = pyramid.threadlocal.get_current_registry()
     settings = registry.settings
     import_global_module(settings, locals(), globals())
