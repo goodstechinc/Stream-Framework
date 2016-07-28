@@ -9,8 +9,8 @@ any settings system.
 def update_settings(settings):
     '''Updates stream_frameworks settings using a settings dictionary.
     '''
-    if 'STREAM_REDIS_CONFIG' in settings:
-        globals()[k] = settings['STREAM_REDIS_CONFIG']
+    if k in settings:
+        globals()[k] = settings[k]
 
 def import_global_module(module, current_locals, current_globals, exceptions=None):
     '''Import the requested module into the global scope
