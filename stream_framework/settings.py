@@ -41,7 +41,7 @@ except ImportError as e:
     settings_system = None
 
 try:
-    import pyramid
+    from pyramid import threadlocal
     settings_system = 'pyramid'
 except ImportError as e:
     setting_system = None
@@ -54,6 +54,6 @@ if settings_system == 'django':
 elif settings_system == 'pyramid':
     print 'here'
     assert 0
-    registry = pyramid.threadlocal.get_current_registry()
+    registry = threadlocal.get_current_registry()
     settings = registry.settings
     import_global_module(settings, locals(), globals())
